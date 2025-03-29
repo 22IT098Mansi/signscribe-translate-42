@@ -1,5 +1,7 @@
 
 import * as mediapipe from '@mediapipe/hands';
+// Import Camera explicitly from '@mediapipe/camera_utils'
+import { Camera } from '@mediapipe/camera_utils';
 
 class MediaPipeService {
   private hands: mediapipe.Hands | null = null;
@@ -75,7 +77,7 @@ class MediaPipeService {
       this.landmarkCallback = callback;
       
       // Start tracking
-      const camera = new mediapipe.Camera(this.videoElement, {
+      const camera = new Camera(this.videoElement, {
         onFrame: async () => {
           if (this.isRunning && this.hands) {
             await this.hands.send({ image: this.videoElement! });
