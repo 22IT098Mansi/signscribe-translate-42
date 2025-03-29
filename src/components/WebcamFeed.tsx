@@ -19,25 +19,13 @@ const WebcamFeed: React.FC<WebcamFeedProps> = ({ onTranslationResult }) => {
   
   const handleLandmarks = async (landmarks: any) => {
     try {
-      // In a real app, this would send the landmarks to your Flask API
-      // const response = await api.translateHandLandmarks(landmarks);
+      // Send landmarks to backend API for prediction
+      const response = await api.translateHandLandmarks(landmarks);
       
-      // For demo purposes, we'll simulate a response
-      // In production, this would be the actual result from your LSTM model
-      setTimeout(() => {
-        const simulatedWords = [
-          "Hello",
-          "Thank you",
-          "How are you",
-          "Good morning",
-          "Good bye",
-          "Please",
-          "Sorry"
-        ];
-        
-        const randomIndex = Math.floor(Math.random() * simulatedWords.length);
-        onTranslationResult(simulatedWords[randomIndex]);
-      }, 500);
+      // Use the prediction result
+      if (response && response.prediction) {
+        onTranslationResult(response.prediction);
+      }
     } catch (error) {
       console.error('Translation error:', error);
       
